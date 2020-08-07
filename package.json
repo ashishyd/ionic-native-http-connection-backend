@@ -38,7 +38,6 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@ionic-native/core": "^5.23.0",
     "@ionic-native/http": "^5.23.0",
-    "@ionic/angular": "^5.0.7",
     "@ionic/core": "^5.0.7",
     "@semantic-release/git": "^9.0.0",
     "@types/jest": "^25.1.4",

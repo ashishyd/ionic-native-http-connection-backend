@@ -7,7 +7,7 @@ This library adds `@ionic-native/http` (when available) as a connection backend 
 
 ## Motivation
 
-Now that Apple promotes/requires the use of `WKWebView` instead of the deprecated `UIWebView`, Ionic has switched newly created apps over via their [`cordova-plugin-ionic-webview`](https://github.com/ionic-team/cordova-plugin-ionic-webview) 
+Now that Apple promotes/requires the use of `WKWebView` instead of the deprecated `UIWebView`, Ionic has switched newly created apps over via their [`cordova-plugin-ionic-webview`](https://github.com/ionic-team/cordova-plugin-ionic-webview)
 (and Cordova offers it via their [`cordova-plugin-wkwebview-engine`](https://github.com/apache/cordova-plugin-wkwebview-engine)). That causes requests that used to work just fine to fail with [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) errors.
 
 The real solution of course is to fix the CORS issues server side - but this may not be possible with e.g. 3rd party APIs.
@@ -16,9 +16,9 @@ Even though there is a way to solve CORS issues without changing server's respon
 
 ## How it works
 
-- The library provides a `HttpBackend` interface for Angular's `HttpClient`
-- This `HttpBackend` interface tries to use `@ionic-native/http` whenever it is possible (= on device with installed plugin)
-- If `HttpBackend` finds it impossible to use `@ionic-native/http`, it falls back to standard Angular code (`HttpXhrBackend`, which uses `XmlHttpRequest`)
+-   The library provides a `HttpBackend` interface for Angular's `HttpClient`
+-   This `HttpBackend` interface tries to use `@ionic-native/http` whenever it is possible (= on device with installed plugin)
+-   If `HttpBackend` finds it impossible to use `@ionic-native/http`, it falls back to standard Angular code (`HttpXhrBackend`, which uses `XmlHttpRequest`)
 
 This strategy allows developers to use Angular's `HttpClient` transparently in both environments: Browser and Device.
 
@@ -37,22 +37,26 @@ Add `NativeHttpModule`, `NativeHttpBackend` and `NativeHttpFallback` into the ap
 ```typescript
 import { NgModule } from '@angular/core';
 import { HttpBackend, HttpXhrBackend } from '@angular/common/http';
-import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
-import { Platform } from '@ionic/angular';
+import {
+    NativeHttpModule,
+    NativeHttpBackend,
+    NativeHttpFallback,
+} from 'ionic-native-http-connection-backend';
 
 @NgModule({
     declarations: [],
-    imports: [
-        NativeHttpModule
-    ],
+    imports: [NativeHttpModule],
     bootstrap: [],
     entryComponents: [],
     providers: [
-        {provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
+        {
+            provide: HttpBackend,
+            useClass: NativeHttpFallback,
+            deps: [NativeHttpBackend, HttpXhrBackend],
+        },
     ],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 ## Contributing
